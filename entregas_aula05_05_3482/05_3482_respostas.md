@@ -24,6 +24,19 @@ Além disso, cada um possuiria seu próprio método:
 - `Chefe de cozinha`: `preparar()`
 - `Gerente`: `demitir()`
 
+As classes `Pizza` e `Bolo` herdariam de `Iguaria` os atributos `nome` e `preço`.
+
+Além disso, cada um possuiria seu próprio atributo:
+
+- `Pizza`: `borda_recheada`
+- `Bolo`: `formato`
+
+`Pizzaria` herdaria de `Restaurante` seus atributos `nome`, `endereço` e `telefone`
+
+Além de possuir seu próprio atributo:
+
+- `Pizzaria`: `rodizio`.
+
 ## 2. Relação entre Restaurante e Iguaria
 
 A relação entre `Restaurante` e `Iguaria` pode ser modelada como uma agregação.
@@ -34,17 +47,27 @@ Um restaurante pode possuir várias iguarias em seu cardápio. Assim, a classe `
 
 A multiplicidade seria `0..*`, indicando que um restaurante pode possuir nenhuma ou várias iguarias.
 
+A classe `Iguaria` não precisa necessariamente deixar de existir caso um restaurante seja removido, pois uma iguaria pode ser representada independentemente do restaurante. Por isso, a agregação é mais adequada do que uma composição forte.
+
 ## 3. Tipos dos argumentos
 
 ### Argumento 1
 
-O `argumento1` poderia ser uma lista de `Iguaria`: `list[Iguaria]`
+Para `argumento1`, seria adequado utilizar uma instância da classe `Pedido`. Um pedido pode conter uma ou várias iguarias, portanto a classe `Pedido` poderia possuir uma lista de iguarias.
 
-Isso ocorre porque um pedido pode envolver uma ou várias iguarias.
+Assim:
+`anotar_pedido(pedido: Pedido)`
 
 ### Argumento 2
 
-O `argumento2` poderia ser uma instância de `Funcionário`: `funcionário`
+Para `argumento2`, seria adequado utilizar uma instância de `Iguaria`, pois o chefe de cozinha prepara uma comida específica. Como `Pizza` e `Bolo` são subclasses de `Iguaria`, o método também poderá receber objetos dessas classes.
 
-Assim, o gerente poderia demitir qualquer funcionário, como um `Garçom` ou um `Chefe de cozinha`.
+Assim:
+`preparar(iguaria: Iguaria)`
 
+### Argumento 3
+
+Para `argumento3`, seria adequado utilizar uma instância de `Funcionario`, pois o gerente demite funcionários. Dessa forma, o metódo poderá receber `Garçom`, `Chefe de cozinha` ou qualquer outra subclasse de `Funcionário`.
+
+Assim:
+`demitir(funcionario: Funcionario)`
